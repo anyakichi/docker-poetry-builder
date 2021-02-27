@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+if [[ $# -eq 0 ]]; then
+    read -ra pyversions <"${0%/*}/pyversions"
+    for v in "${pyversions[@]}"; do
+        docker push "${DOCKER_REPO}:$v"
+    done
+    docker push "${DOCKER_REPO}:latest"
+else
+    docker push "$@"
+fi

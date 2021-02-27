@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+build() {
+    local pyversion=$1
+
+    docker build --build-arg pyversion="${pyversion}" \
+        -t "${DOCKER_REPO}:${pyversion}" .
+}
+
+if [[ $# -eq 0 ]]; then
+    read -ra pyversions <"${0%/*}/pyversions"
+    for v in "${pyversions[@]}"; do
+        build "$v"
+        docker tag "${DOCKER_REPO}:$v" "${DOCKER_REPO}:latest"
+    done
+else
+    build "$@"
+fi
