@@ -7,6 +7,7 @@ RUN \
     git \
     gosu \
     sudo \
+    wait-for-it \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install poetry
