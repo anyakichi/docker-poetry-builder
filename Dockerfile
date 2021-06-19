@@ -19,7 +19,8 @@ USER builder
 RUN \
   echo '. <(buildenv init)' >> ~/.bashrc \
   && git config --global user.email "builder@poetry" \
-  && git config --global user.name "poetry builder"
+  && git config --global user.name "poetry builder" \
+  && poetry config virtualenvs.in-project true
 
 USER root
 WORKDIR /home/builder
