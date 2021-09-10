@@ -1,0 +1,11 @@
+ARG pyversion=latest
+FROM ghcr.io/anyakichi/poetry-builder:${pyversion}
+
+RUN \
+  curl -fsSL https://rpm.nodesource.com/setup_lts.x | bash - \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN \
+  npm install -g prettier pyright
+
+COPY buildenv.d/*.41.md /etc/buildenv.d

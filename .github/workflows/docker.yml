@@ -17,6 +17,13 @@ jobs:
             anyakichi/poetry-builder
             ghcr.io/anyakichi/poetry-builder
           tags: ${{ matrix.python }}
+      - uses: docker/metadata-action@v3
+        id: meta-full
+        with:
+          images: |
+            anyakichi/poetry-builder
+            ghcr.io/anyakichi/poetry-builder
+          tags: ${{ matrix.python }}-full
       - if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v1
         with:
@@ -34,4 +41,12 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           build-args: pyversion=${{ matrix.python }}
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile.full
+          push: ${{ github.ref == 'refs/heads/main' }}
+          build-args: pyversion=${{ matrix.python }}
+          tags: ${{ steps.meta-full.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
