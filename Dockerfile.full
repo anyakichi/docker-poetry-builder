@@ -7,5 +7,3 @@ RUN \
 
 RUN \
   npm install -g prettier pyright
-
-COPY buildenv.d/*.41.md /etc/buildenv.d
