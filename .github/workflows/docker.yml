@@ -2,13 +2,13 @@ name: Publish Docker image
 on:
   push:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.8-slim, 3.8, 3.9-slim, 3.9, slim, latest]
+        python: [3.8-slim, 3.8, 3.9-slim, 3.9, 3.10-slim, "3.10", slim, latest]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -41,9 +41,16 @@ jobs:
 
   build_and_push_full:
     runs-on: ubuntu-latest
+    needs: [build_and_push]
     strategy:
       matrix:
-        tag_base: [[3.8-full, 3.8], [3.9-full, 3.9], [full, latest]]
+        tag_base:
+          [
+            [3.8-full, 3.8],
+            [3.9-full, 3.9],
+            [3.10-full, "3.10"],
+            [full, latest],
+          ]
     steps:
       - uses: actions/checkout@v2
         with:
