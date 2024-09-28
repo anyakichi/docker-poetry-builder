@@ -24,10 +24,10 @@ jobs:
             latest,
           ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: docker/metadata-action@v3
+      - uses: docker/metadata-action@v5
         id: meta
         with:
           images: |
@@ -35,17 +35,17 @@ jobs:
             ghcr.io/anyakichi/poetry-builder
           tags: ${{ matrix.python }}
       - if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v2
+      - uses: docker/build-push-action@v5
         with:
           context: .
           push: ${{ github.ref == 'refs/heads/main' }}
@@ -68,10 +68,10 @@ jobs:
             [full, latest],
           ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: docker/metadata-action@v3
+      - uses: docker/metadata-action@v5
         id: meta
         with:
           images: |
@@ -79,17 +79,17 @@ jobs:
             ghcr.io/anyakichi/poetry-builder
           tags: ${{ matrix.tag_base[0] }}
       - if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v2
+      - uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile.full
