@@ -8,7 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.8-slim, 3.8, 3.9-slim, 3.9, 3.10-slim, "3.10", slim, latest]
+        python:
+          [
+            "3.8-slim",
+            "3.8",
+            "3.9-slim",
+            "3.9",
+            "3.10-slim",
+            "3.10",
+            "3.11-slim",
+            "3.11",
+            "3.12-slim",
+            "3.12",
+            slim,
+            latest,
+          ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -46,9 +60,11 @@ jobs:
       matrix:
         tag_base:
           [
-            [3.8-full, 3.8],
-            [3.9-full, 3.9],
+            [3.8-full, "3.8"],
+            [3.9-full, "3.9"],
             [3.10-full, "3.10"],
+            [3.11-full, "3.11"],
+            [3.12-full, "3.12"],
             [full, latest],
           ]
     steps:
